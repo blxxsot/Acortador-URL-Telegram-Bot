@@ -19,12 +19,8 @@ Acortar URL: El bot procesará cualquier mensaje que contenga una URL válida. S
 # Cómo ejecutar el Bot
 Para poner en funcionamiento el bot, sigue estos pasos:
 
-Crea un nuevo bot en Telegram:
-Inicia una conversación con @BotFather en Telegram.
-Escribe el comando /newbot y sigue las instrucciones para crear tu propio bot.
-Obtén el token del bot proporcionado por @BotFather y reemplázalo por "TOKEN_DE_TU_BOT" en el archivo main.py.
-Ejecuta el bot:
-Abre una terminal o línea de comandos en el directorio donde se encuentra el archivo main.py.
+Crea un nuevo Bot de Telegram con ayuda de @BotFather, posteriormente copia el token proporcionado por @BotFather y reenplazalo por "TOKEN_DE_TU_BOT" en el archivo main.py.
+Para ejecutar el Bot abre una terminal o línea de comandos en el directorio donde se encuentra el archivo main.py.
 Ejecuta el siguiente comando:
 python main.py
 El bot se activará y estará listo para recibir y acortar URLs.
