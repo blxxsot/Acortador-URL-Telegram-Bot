@@ -1,7 +1,6 @@
 import logging
-import pyshorteners
 import re
-
+import pyshorteners
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
@@ -11,39 +10,37 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-def start(update: Update, _: CallbackContext) -> None:
-    update.message.reply_text(f'Hola, {update.message.from_user.first_name} Bienvenido! Soy un bot creado por @azaelclrz')
-    update.message.reply_text('Me asignaron el trabajo de hacerte la vida más fácil. Proporcianme una URL y te la acortaré inmediatamente.')
+def start(update: Update, context: CallbackContext) -> None:
+    name = update.message.from_user.first_name
+    update.message.reply_text(f'Hola, {name}! \n Soy un bot que acorta URLs. Envíame una URL y la acortaré para ti. \n\n Owner: @azaelclrz')
 
+def help_command(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Envíame una URL y la acortaré para ti.')
 
-def help_command(update: Update, _: CallbackContext) -> None:
-    update.message.reply_text('¡Proporcioname una URL y la acortaré para ti!')
+def shorten_url(update: Update, context: CallbackContext) -> None:
+    url = re.findall(r'http[s]?://\S+', update.message.text)
 
-
-def url_shortener(update: Update, _: CallbackContext) -> None:
-    s = pyshorteners.Shortener()
-    link = re.findall(r'(\w*\.\w+\.*\w+.*)', update.message.text)
-    if link:
-        url = s.tinyurl.short(f'https://{link[0]}')
-        update.message.reply_text(url)
-        print(update.message.from_user.first_name, 'shorted this link:', f'https://{link[0]}')
+    if url:
+        url = url[0]
+        s = pyshorteners.Shortener()
+        shortened_url = s.tinyurl.short(url)
+        update.message.reply_text(f'URL acortada: {shortened_url}')
+        print(update.message.from_user.first_name, 'acortó la siguiente URL:', url)
     else:
-        update.message.reply_text('Proporciona una URL válida.')
-
+        update.message.reply_text('Por favor, envía una URL válida.')
 
 def main() -> None:
-    updater = Updater("6587578305:AAHqtmE9yBjlj1Y1Si9dqPhhnDkyYImwmbQ")
+    updater = Updater("TOKEN_DE_TU_BOT")  # Reemplaza con el token real de tu bot de Telegram
 
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
 
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, url_shortener))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, shorten_url))
     
     updater.start_polling()
     updater.idle()
-
 
 if __name__ == '__main__':
     main()
