@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def start(update: Update, context: CallbackContext) -> None:
     name = update.message.from_user.first_name
-    update.message.reply_text(f'Hola, {name}! \n Soy un bot que acorta URLs. Envíame una URL y la acortaré para ti. \n\n Owner: @azaelclrz')
+    update.message.reply_text(f'Hola, {name}! \n Soy un bot que acorta URLs. Envíame una URL y la acortaré para ti. \n\n Owner: @ry_sukuna')
 
 def help_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Envíame una URL y la acortaré para ti.')
